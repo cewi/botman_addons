@@ -1,5 +1,5 @@
 # botman_addons
-Some extra stuff for botman 
+Some extra stuff for [BotMan](https://botman.io) 
 
 ## RasaNLU Middleware
 
