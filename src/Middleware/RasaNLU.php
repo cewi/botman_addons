@@ -91,7 +91,7 @@ class RasaNLU implements Received, Captured, Matching, Heard, Sending {
      * @return stdClass
      */
     protected function getResponse(IncomingMessage $message) {
-        $response = $this->http->post($this->rasaUrl, [], [
+        $this->response = $this->http->post($this->rasaUrl, [], [
             'query' => [$message->getText()],
             'sessionId' => md5($message->getRecipient()),
             'project' => $this->project,
