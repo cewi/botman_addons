@@ -40,5 +40,6 @@ public function handle()
     
  }
 ```
+See [https://botman.io/2.0/middleware](https://botman.io/2.0/middleware) how to apply middleware in BotMan.
 
 WIP - Don't use for now!
