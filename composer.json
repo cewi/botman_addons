@@ -1,0 +1,22 @@
+{
+    "name": "cewi/botman_addons",
+    "description": "some extra stuff for botman",
+    "type": "library",
+    "require": {
+        "php": "^7.1",
+        "botman/studio": "^1.2"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "cewi",
+            "email": "c.wichmann@gmx.de"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Cewi\\BotManAddons\\": "src/"
+        }
+    }
+}
