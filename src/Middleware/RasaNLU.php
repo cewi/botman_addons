@@ -15,11 +15,13 @@ use Illuminate\Support\Collection;
 
 /**
  * RasaNLU Middleware
+ *
+ * Use RasaNLU https://github.com/RasaHQ/rasa_nlu for text processing in BotMan https://botman.io/
  * 
  * processes received messages
  * returns intents and entities
  * 
- * Ideas borrowed from Botman's wit.ai middleware https://github.com/botman/botman/blob/2.0/src/Middleware/Wit.php
+ * Code borrowed from Botman's wit.ai middleware https://github.com/botman/botman/blob/2.0/src/Middleware/Wit.php
  *
  */
 class RasaNLU implements Received, Captured, Matching, Heard, Sending {
