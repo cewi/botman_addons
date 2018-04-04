@@ -11,6 +11,7 @@ use BotMan\BotMan\Interfaces\Middleware\Captured;
 use BotMan\BotMan\Interfaces\Middleware\Matching;
 use BotMan\BotMan\Interfaces\Middleware\Received;
 use BotMan\BotMan\Messages\Incoming\IncomingMessage;
+use Illuminate\Support\Collection;
 
 /**
  * RasaNLU Middleware
