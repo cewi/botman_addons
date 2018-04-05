@@ -3,7 +3,8 @@
     "description": "some extra stuff for botman",
     "type": "library",
     "require": {
-        "php": "^7.1"
+        "botman/botman": "~2.0",
+        "tightenco/collect": "~5.0"
     },
     "license": "MIT",
     "authors": [
