@@ -5,13 +5,14 @@ namespace Cewi\BotManAddons\Middleware;
 use BotMan\BotMan\BotMan;
 use BotMan\BotMan\Http\Curl;
 use BotMan\BotMan\Interfaces\HttpInterface;
-use BotMan\BotMan\Interfaces\Middleware\Heard;
-use BotMan\BotMan\Interfaces\Middleware\Sending;
 use BotMan\BotMan\Interfaces\Middleware\Captured;
+use BotMan\BotMan\Interfaces\Middleware\Heard;
 use BotMan\BotMan\Interfaces\Middleware\Matching;
 use BotMan\BotMan\Interfaces\Middleware\Received;
+use BotMan\BotMan\Interfaces\Middleware\Sending;
 use BotMan\BotMan\Messages\Incoming\IncomingMessage;
-use Illuminate\Support\Collection;
+use stdClass;
+use Tightenco\Collect\Support\Collection;
 
 /**
  * RasaNLU Middleware
@@ -100,7 +101,7 @@ class RasaNLU implements Received, Captured, Matching, Heard, Sending {
                 ], [
             'Content-Type: application/json; charset=utf-8',
                 ], true);
-
+        //Log::debug($this->response);
         return $this->response;
     }
 
@@ -127,11 +128,22 @@ class RasaNLU implements Received, Captured, Matching, Heard, Sending {
      * @return mixed
      */
     public function received(IncomingMessage $message, $next, BotMan $bot) {
-        
+
         $response = $this->getResponse($message);
-        
         $responseData = Collection::make(json_decode($response->getContent(), true));
-        $message->addExtras('entities', $responseData->get('entities'));
+
+        // store intent for matching purposes
+        $message->addExtras('intent', $responseData->get('intent'));
+
+        // extract all captured entities
+        $captured = $responseData->get('entities', []);
+        $entities = [];
+        if(!empty($captured)){
+            foreach ($captured as $entity){
+                $entities[$entity['entity']] = $entity['value'];
+            }
+        }
+        $message->addExtras('entities', Collection::make($entities));
 
         return $next($message);
     }
@@ -143,18 +155,11 @@ class RasaNLU implements Received, Captured, Matching, Heard, Sending {
      * @return bool
      */
     public function matching(IncomingMessage $message, $pattern, $regexMatched) {
-        
-       $entities = Collection::make($message->getExtras())->get('entities', []);
-        if (! empty($entities)) {
-            foreach ($entities as $name => $entity) {
-                if ($name === 'intent') {
-                    foreach ($entity as $item) {
-                        if ($item['value'] === $pattern && $item['confidence'] >= $this->minimumConfidence) {
-                            return true;
-                        }
-                    }
-                }
-            }
+
+        $intent = $message->getExtras('intent');
+
+        if ($intent['name'] === $pattern && $intent['confidence'] >= $this->minimumConfidence) {
+            return true;
         }
 
         return false;
