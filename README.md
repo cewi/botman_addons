@@ -1,7 +1,7 @@
 # botman_addons
 Some extra stuff for [BotMan](https://botman.io) 
 
-WIP - Use at your own risk!
+WIP - details may change
 
 ## RasaNLU Middleware
 
