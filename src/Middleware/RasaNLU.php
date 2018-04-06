@@ -101,7 +101,7 @@ class RasaNLU implements Received, Captured, Matching, Heard, Sending {
                 ], [
             'Content-Type: application/json; charset=utf-8',
                 ], true);
-        //Log::debug($this->response);
+        
         return $this->response;
     }
 
